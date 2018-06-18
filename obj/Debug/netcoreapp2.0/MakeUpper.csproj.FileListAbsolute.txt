@@ -1,0 +1,11 @@
+c:\users\sheridan\source\repos\MakeUpper\obj\Debug\netcoreapp2.0\MakeUpper.csprojAssemblyReference.cache
+c:\users\sheridan\source\repos\MakeUpper\obj\Debug\netcoreapp2.0\MakeUpper.csproj.CoreCompileInputs.cache
+c:\users\sheridan\source\repos\MakeUpper\obj\Debug\netcoreapp2.0\MakeUpper.AssemblyInfoInputs.cache
+c:\users\sheridan\source\repos\MakeUpper\obj\Debug\netcoreapp2.0\MakeUpper.AssemblyInfo.cs
+c:\users\sheridan\source\repos\MakeUpper\bin\Debug\netcoreapp2.0\MakeUpper.deps.json
+c:\users\sheridan\source\repos\MakeUpper\bin\Debug\netcoreapp2.0\MakeUpper.runtimeconfig.json
+c:\users\sheridan\source\repos\MakeUpper\bin\Debug\netcoreapp2.0\MakeUpper.runtimeconfig.dev.json
+c:\users\sheridan\source\repos\MakeUpper\bin\Debug\netcoreapp2.0\MakeUpper.dll
+c:\users\sheridan\source\repos\MakeUpper\bin\Debug\netcoreapp2.0\MakeUpper.pdb
+c:\users\sheridan\source\repos\MakeUpper\obj\Debug\netcoreapp2.0\MakeUpper.dll
+c:\users\sheridan\source\repos\MakeUpper\obj\Debug\netcoreapp2.0\MakeUpper.pdb

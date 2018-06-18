@@ -1,0 +1,80 @@
+﻿AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: Simple Lambda function in dotnetcore2.0.
+Parameters:  
+  PathToArtifact:
+    Type: String
+    Description: Path to artifact on S3
+Resources:
+  Api:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: dev
+      DefinitionBody:
+          swagger: 2.0
+          info:
+            title:
+              Ref: AWS::StackName
+          x-amazon-apigateway-request-validators:
+            full:
+              validateRequestBody: true
+              validateRequestParameters: true
+          x-amazon-apigateway-request-validator: full
+          paths:
+            "/makeUpper":
+              get:
+                x-amazon-apigateway-integration:
+                  httpMethod: GET
+                  type: aws_proxy
+                  uri:
+                    Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${Get.Arn}/invocations
+                  passthroughBehavior: "when_no_match"
+                x-amazon-apigateway-auth:
+                  type: "none"
+                responses:
+                  "200":
+                    description: Return unique ID plus input params             
+              get:
+                parameters:
+                  - in: path
+                    name: ticket_id
+                    required: true
+                    type: string
+                x-amazon-apigateway-integration:
+                  httpMethod: GET
+                  type: aws_proxy
+                  uri:
+                    Fn::Sub: arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${Get.Arn}/invocations
+                  passthroughBehavior: "when_no_match"
+                  requestParameters:
+                    integration.request.path.ticket_id: method.request.path.ticket_id
+                x-amazon-apigateway-auth:
+                  type: "none"
+                responses:
+                  "200":
+                    description: Return unique ID plus input params
+  Get:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: mode2services::mode2services.Functions::Get
+      Runtime: dotnetcore2.0
+      CodeUri:
+        Bucket: mode2services
+        Key: !Ref PathToArtifact      
+      MemorySize: 256
+      Timeout: 30
+      Role: null
+      Policies:
+        - AdministratorAccess
+      Events:
+        GetTickets:
+          Type: Api
+          Properties:
+            Path: /makeUpper
+            Method: GET
+            RestApiId:
+              Ref: Api 
+Outputs:  
+  GetFunction:
+    Description: Get Function
+    Value: !Ref Get  

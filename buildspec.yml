@@ -1,0 +1,29 @@
+﻿version: 0.2
+
+env:
+  parameter-store:
+    ARTIFACTORYAPIKEY: "/CodeBuild/artifactory-api-key"
+
+phases:  
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo ${CODEBUILD_RESOLVED_SOURCE_VERSION}
+      #- sh mode2-services/fetch-parameters.sh
+      - aws cloudformation package --template-file yaml/serverless.yaml --s3-bucket $BUILD_OUTPUT_BUCKET --output-template-file NewSamTemplate.yaml
+      - dotnet restore
+      - dotnet build
+      - dotnet publish
+      - cd MakeUpper/bin/Debug/netcoreapp2.0/publish
+      - zip ../../../../publish.zip *
+      - aws s3 cp ../../../../publish.zip s3://makeupper/${CODEBUILD_RESOLVED_SOURCE_VERSION}/publish.zip
+  post_build:
+    commands:
+      - echo Build completed on `date`
+artifacts:
+  type: zip
+  files:
+    - NewSamTemplate.yaml
+    - publish.zip
+    - parameters.json
+  discard-paths: yes
